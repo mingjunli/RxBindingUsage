@@ -9,7 +9,6 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.concurrent.TimeUnit;
 
-import rx.Notification;
 import rx.functions.Action1;
 
 public class ClickEventDemoActivity extends AppCompatActivity {
@@ -20,6 +19,7 @@ public class ClickEventDemoActivity extends AppCompatActivity {
     private Button mPreventMultipleClicksBtn2;
     private Button mPreventMultipleClicksBtn3;
     private Button mDelayResponseBtn;
+    private Button mClickCountBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +68,15 @@ public class ClickEventDemoActivity extends AppCompatActivity {
                     @Override
                     public void call(Void aVoid) {
                         Log.d(TAG, "Response the click after 1s. response time = " + System.currentTimeMillis());
+                    }
+                });
+
+        mClickCountBtn = (Button) findViewById(R.id.click_count_btn);
+        RxView.clicks(mClickCountBtn).count()
+                .subscribe(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer integer) {
+                        Log.d(TAG, "Click count = " + integer);
                     }
                 });
     }
